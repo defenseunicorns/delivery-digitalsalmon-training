@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: gitlab-postgres
+  version: "0.0.1"
+  architecture: amd64
+
+components:
+  - name: postgres
+    required: true
+    charts:
+      - name: postgresql
+        version: 12.6.6
+        namespace: gitlab-db
+        url: https://charts.bitnami.com/bitnami
+        valuesFiles:
+          - "values.yaml"
+    images:
+      - docker.io/bitnami/postgresql:15.3.0-debian-11-r24
+    actions:
+      onDeploy:
+        after:
+          - wait:
+              cluster:
+                kind: Pod
+                name: postgresql-0
+                condition: Ready
+                namespace: gitlab-db
