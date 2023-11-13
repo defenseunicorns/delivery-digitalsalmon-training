@@ -1,0 +1,44 @@
+namespaces:
+  - name: gitlab
+    labels:
+      istio-injection: enabled
+  - name: gitlab-redis
+    labels:
+      istio-injection: enabled
+  - name: gitlab-minio
+    labels:
+      istio-injection: enabled
+  - name: gitlab-runner-sandbox
+    labels:
+      istio-injection: enabled
+      zarf.dev/agent: ignore
+  - name: gitlab-runner
+    labels:
+      istio-injection: enabled
+  - name: sonarqube
+    labels:
+      istio-injection: enabled
+  - name: metallb-system
+    labels:
+      istio-injection: disabled
+  - name: confluence
+    labels:
+      istio-injection: enabled
+  - name: jira
+    labels:
+      istio-injection: enabled
+  - name: mattermost
+    labels:
+      istio-injection: enabled
+  - name: mattermost-minio
+    labels:
+      istio-injection: enabled
+  - name: mattermost-operator
+    labels:
+      istio-injection: enabled
+  - name: nexus
+    labels:
+      istio-injection: enabled
+  - name: keycloak
+    labels:
+      istio-injection: enabled

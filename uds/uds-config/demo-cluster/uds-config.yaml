@@ -1,0 +1,40 @@
+bundle:
+  deploy:
+    zarf-packages:
+      init:
+        set:
+          # TODO - remove this if/when functionality is restored upstream
+          REGISTRY_HPA_ENABLE: false
+      dubbd-rke2:
+        set:
+          # TODO - replace these blanket exceptions with more targeted kyverno policy exceptions
+          EXEMPT_NAMESPACES: '["zarf", "rook-ceph", "metallb-system"]'
+          DOMAIN: "bigbang.dev"
+      software-factory-idam-gitlab:
+        set:
+          DOMAIN: "bigbang.dev"
+      software-factory-idam-realm:
+        set:
+          DOMAIN: "bigbang.dev"
+      uds-idam:
+        set:
+          DOMAIN: "bigbang.dev"
+      gitlab:
+        set:
+          DOMAIN: "bigbang.dev"
+      sonarqube:
+        set:
+          DOMAIN: "bigbang.dev"
+          SONARQUBE_IDAM_REALM_URL: "https://keycloak.bigbang.dev/auth/realms/baby-yoda"
+      jira:
+        set:
+          DOMAIN: "bigbang.dev"
+      confluence:
+        set:
+          DOMAIN: "bigbang.dev"
+      mattermost:
+        set:
+          DOMAIN: "bigbang.dev"
+      nexus:
+        set:
+          DOMAIN: "bigbang.dev"

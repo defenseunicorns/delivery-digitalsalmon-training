@@ -40,29 +40,6 @@ help: ## Show a list of all targets
 	| sed -n 's/^\(.*\): \(.*\)##\(.*\)/\1:\3/p' \
 	| column -t -s ":"
 
-
-########################################################################
-# Cluster Section
-########################################################################
-
-cluster/reset: cluster/destroy cluster/create ## This will destroy any existing cluster and then create a new one
-
-cluster/create: ## Create a k3d cluster with metallb installed
-	K3D_FIX_MOUNTS=1 k3d cluster create k3d-test-cluster --config ../utils/k3d/k3d-config.yaml
-	k3d kubeconfig merge k3d-test-cluster -o /home/${USER}/cluster-kubeconfig.yaml
-	echo "Installing Calico..."
-	kubectl apply --wait=true -f ../utils/calico/calico.yaml 2>&1 >/dev/null
-	echo "Waiting for Calico to be ready..."
-	kubectl rollout status deployment/calico-kube-controllers -n kube-system --watch --timeout=90s 2>&1 >/dev/null
-	kubectl rollout status daemonset/calico-node -n kube-system --watch --timeout=90s 2>&1 >/dev/null
-	kubectl wait --for=condition=Ready pods --all --all-namespaces 2>&1 >/dev/null
-	echo
-	../utils/metallb/install.sh
-	echo "Cluster is ready!"
-
-cluster/destroy: ## Destroy the k3d cluster
-	k3d cluster delete k3d-test-cluster
-
 ########################################################################
 # Build Section
 ########################################################################
@@ -128,9 +105,9 @@ deploy/uds-capability-gitlab: ## uds-capability-gitlab
 # Macro Section
 ########################################################################
 
-zarf-walkthrough/v1: build/all cluster/reset deploy/zarf-init deploy/namespace-pkg deploy/gitlab-deps-v1 ## Build and deploy
+zarf-walkthrough/v1: build/all deploy/zarf-init deploy/namespace-pkg deploy/gitlab-deps-v1 ## Build and deploy
 
-zarf-walkthrough/v2: build/all cluster/reset deploy/zarf-init deploy/dubbd deploy/namespace-pkg deploy/gitlab-deps-v2 deploy/uds-capability-gitlab ## Build and deploy
+zarf-walkthrough/v2: build/all deploy/zarf-init deploy/dubbd deploy/namespace-pkg deploy/gitlab-deps-v2 deploy/uds-capability-gitlab ## Build and deploy
 
 .PHONY: rebuild
 rebuild: clean build/all
