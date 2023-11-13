@@ -83,7 +83,7 @@ deploy/zarf-init: ## Run zarf init
 	cd ./build && ./zarf init --components git-server --confirm
 
 deploy/dubbd: ## Deploy DUBBD
-	cd ./build && ./zarf package deploy oci://ghcr.io/defenseunicorns/packages/dubbd-k3d:$(DUBBD_VERSION)-amd64 --confirm
+	cd ./build && ./zarf package deploy oci://ghcr.io/defenseunicorns/packages/dubbd-rke2:$(DUBBD_VERSION)-amd64 --confirm
 
 deploy/namespace-pkg: ## Deploy Namespace package
 	cd ./build && ./zarf package deploy zarf-package-gitlab-namespaces-amd64-0.0.1.tar.zst --confirm
