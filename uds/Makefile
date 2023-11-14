@@ -99,7 +99,7 @@ build/uds-bundle-software-factory: | build ## Build the software factory
 # Deploy Section
 ########################################################################
 
-deploy: ## Deploy the software factory package to the demo cluster
+deploy/demo-cluster: ## Deploy the software factory package to the demo cluster
 	cp uds-config/demo-cluster/uds-config.yaml ./build/
 	cp deploy-dubbd-values.yaml ./build/
 	cd ./build && ./uds deploy uds-bundle-software-factory-*.tar.zst --confirm
@@ -109,7 +109,7 @@ deploy: ## Deploy the software factory package to the demo cluster
 # Macro Section
 ########################################################################
 
-all: build/all deploy ## Build and deploy the software factory to the test cluster
+all: build/all deploy/demo-cluster ## Build and deploy the software factory to the test cluster
 
 .PHONY: rebuild
 rebuild: clean build/all
