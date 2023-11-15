@@ -80,7 +80,7 @@ build/gitlab-deps-v2: | build ## Build gitlab-deps-v1 packages
 ########################################################################
 
 deploy/zarf-init: ## Run zarf init
-	cd ./build && ./zarf init --set REGISTRY_HPA_ENABLE=false --components git-server  --confirm
+	cd ./build && ./zarf init --set REGISTRY_HPA_ENABLE=false --components git-server --confirm
 
 deploy/dubbd: ## Deploy DUBBD
 	cd ./build && ./zarf package deploy oci://ghcr.io/defenseunicorns/packages/dubbd-rke2:$(DUBBD_VERSION)-amd64 --confirm
